@@ -1,0 +1,16 @@
+services:
+  tpv-eureka:
+    build: .
+    image: goa-eureka:1.0.0
+    restart: always
+    ports:
+      - "8761:8761"
+    networks:
+      - miw
+
+networks:
+  miw:
+    external: true
+
+#> docker network create miw
+#> docker compose -f docker-compose-dev.yml up --build -d

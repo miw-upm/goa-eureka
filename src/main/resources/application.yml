@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: goa-eureka
+  profiles:
+  # Profile ------------
+    active: dev
+  # --------------------
+  output:
+    ansi:
+      enabled: ALWAYS
+
+info:
+  app:
+    artifact: "@project.artifactId@"
+    version: "@project.version@"
+    build: "@maven.build.timestamp@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true
+
+logging:
+  level:
+    root: WARN
+    es.upm.miw: DEBUG
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 30000
+    renewal-threshold-update-interval-ms: 900000
+    expected-client-renewal-interval-seconds: 30
+  client:
+    register-with-eureka: false
+    fetch-registry: false
