@@ -6,10 +6,10 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - miw
+      - goa
 
 networks:
-  miw:
+  goa:
     external: true
 
 #> docker network create miw
