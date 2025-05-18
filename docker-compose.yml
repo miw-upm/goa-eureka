@@ -1,7 +1,7 @@
 services:
-  tpv-eureka:
+  goa-eureka:
     build: .
-    image: goa-eureka:1.0.0
+    image: ghcr.io/miw-upm/goa-eureka:latest
     restart: always
     ports:
       - "8761:8761"
@@ -12,5 +12,5 @@ networks:
   goa:
     external: true
 
-#> docker network create goaversion
+#> docker network create goa
 #> docker compose up --build -d
