@@ -12,5 +12,5 @@ networks:
   goa:
     external: true
 
-#> docker network create miw
+#> docker network create goaversion
 #> docker compose up --build -d
