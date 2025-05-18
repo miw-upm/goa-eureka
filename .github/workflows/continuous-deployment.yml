@@ -58,6 +58,10 @@ jobs:
           username: ${{ secrets.AWS_LIGHTSAIL_USER }}
           key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY }}
           script: |
+            cd /home/ubuntu
+            rm -rf goa-eureka
+            mkdir goa-eureka && tar xzf project.tar.gz -C goa-eureka
+            cd goa-eureka
             echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ${{ env.GHCR_URL }} -u ${{ github.actor }} --password-stdin
             docker compose rm -sf $ARTIFACT
             docker compose pull $ARTIFACT
