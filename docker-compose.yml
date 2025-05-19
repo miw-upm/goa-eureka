@@ -2,7 +2,7 @@ services:
   goa-eureka:
     container_name: goa-eureka
     build: .
-    image: ghcr.io/miw-upm/goa-eureka:latest
+    image: goa-eureka:latest
     restart: always
     ports:
       - "8761:8761"
