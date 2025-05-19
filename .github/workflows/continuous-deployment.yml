@@ -58,11 +58,8 @@ jobs:
           username: ${{ secrets.AWS_LIGHTSAIL_USER }}
           key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY }}
           script: |
-            echo *** | docker login ghcr.io -u miw-upm --password-stdin
-            rm -rf goa-eureka
-            git clone https://github.com/miw-upm/goa-eureka.git
-            cd goa-eureka
             echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ${{ env.GHCR_URL }} -u ${{ github.actor }} --password-stdin
-            docker compose rm -sf $ARTIFACT
-            docker compose pull $ARTIFACT
-            docker compose up -d --build $ARTIFACT
+            docker rm -f ${{ env.ARTIFACT }}-app || true
+            docker rmi ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest || true
+            docker pull ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
+            docker run -d --name ${{ env.ARTIFACT }}-app --restart always --network goa -p 8761:8761 ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
