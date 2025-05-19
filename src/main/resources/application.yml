@@ -2,7 +2,7 @@ spring:
   application:
     name: goa-eureka
   profiles:
-  # Profile ------------
+    # Profile ------------
     active: dev
   # --------------------
   output:
