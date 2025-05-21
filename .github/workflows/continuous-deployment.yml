@@ -68,3 +68,8 @@ jobs:
               -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
               -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
               ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
+            docker stop goa-user
+            docker stop goa-gateway
+            sleep 10
+            docker start goa-gateway
+            docker start goa-user
