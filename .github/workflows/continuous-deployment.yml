@@ -60,11 +60,9 @@ jobs:
           script: |
             echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ${{ env.GHCR_URL }} -u ${{ github.actor }} --password-stdin
             docker rm -f ${{ env.ARTIFACT }}-1 || true
-            docker rmi ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest || true
             docker pull ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
             docker run -d \
               --name ${{ env.ARTIFACT }}-1 \
               --restart always \
               --network goa \
-              -p 8761:8761 \
               ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
