@@ -13,7 +13,6 @@ spring:
       name: admin
       password: admin
 
-
 info:
   app:
     artifact: "@project.artifactId@"
