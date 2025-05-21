@@ -65,4 +65,6 @@ jobs:
               --name ${{ env.ARTIFACT }} \
               --restart always \
               --network goa \
+              -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
+              -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
               ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
