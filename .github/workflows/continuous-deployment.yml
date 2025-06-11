@@ -70,6 +70,8 @@ jobs:
               ${{ env.GHCR_URL }}/${{ env.REPOSITORY }}:latest
             docker stop goa-user
             docker stop goa-gateway
-            sleep 20
+            docker stop goa-engagement
+            sleep 40
             docker start goa-gateway
             docker start goa-user
+            docker start goa-engagement
