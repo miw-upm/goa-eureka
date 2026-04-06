@@ -16,4 +16,4 @@ networks:
 #> docker network create goa
 #> docker compose up --build -d
 # Para ver los logs de arranque
-#> docker logs -f goa-user
+#> docker logs -f goa-eureka
