@@ -60,7 +60,7 @@ jobs:
               --network goa \
               -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
               -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
-#              ghcr.io/${{ env.REPOSITORY }}:latest
+              ghcr.io/${{ env.REPOSITORY }}:latest
 #            docker stop goa-engagement
 #            docker stop goa-billing
 #            docker stop goa-support
