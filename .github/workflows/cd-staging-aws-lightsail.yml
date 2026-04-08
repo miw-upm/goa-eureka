@@ -58,6 +58,8 @@ jobs:
               --name ${{ env.ARTIFACT }} \
               --restart always \
               --network goa \
+              --memory 512m \
+              --memory-swap 1024m \
               -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
               -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
               ghcr.io/${{ env.REPOSITORY }}:latest
