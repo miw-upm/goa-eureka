@@ -60,14 +60,15 @@ jobs:
               --network goa \
               --memory 512m \
               --memory-swap 1024m \
+              -e SPRING_PROFILES_ACTIVE=prod \
               -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
               -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
               ghcr.io/${{ env.REPOSITORY }}:latest
+            docker stop goa-gateway
             docker stop goa-engagement
             docker stop goa-user
-            docker stop goa-gateway
             sleep 40
-            docker start goa-gateway
             docker start goa-user
-            docker start goa-engagement
+            docker start goa-engagement            
+            docker start goa-gateway
 
