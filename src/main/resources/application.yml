@@ -1,23 +1,24 @@
-spring:
-  application:
-    name: goa-eureka
-  profiles:
-    # Profile ------------
-    active: dev
-  # --------------------
-  output:
-    ansi:
-      enabled: ALWAYS
-  security:
-    user:
-      name: admin
-      password: admin
+server:
+  port: 8761
 
 info:
   app:
     artifact: "@project.artifactId@"
     version: "@project.version@"
     build: "@maven.build.timestamp@"
+
+spring:
+  application:
+    name: goa-eureka
+  profiles:
+    default: dev
+  output:
+    ansi:
+      enabled: ALWAYS
+  security:
+    user:
+      name: ${EUREKA_USER:admin}
+      password: ${EUREKA_PASSWORD:admin}
 
 management:
   endpoints:
@@ -44,6 +45,3 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
-
-server:
-  port: 8761
