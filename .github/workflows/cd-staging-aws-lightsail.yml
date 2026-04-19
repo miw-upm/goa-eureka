@@ -70,7 +70,7 @@ jobs:
             
             echo "⏳ Esperando que Eureka esté listo..."
             for i in $(seq 1 12); do
-              sleep 5
+              sleep 10
               EUREKA_STATUS=$(docker inspect --format='{{.State.Health.Status}}' goa-eureka 2>/dev/null || echo "error")
               echo "Eureka intento $i: $EUREKA_STATUS"
               [ "$EUREKA_STATUS" = "healthy" ] && break
@@ -82,7 +82,16 @@ jobs:
 
             echo "🚀 Levantando servicios"
             docker start goa-user goa-engagement goa-support
-            sleep 30
+            echo "⏳ Esperando a goa-user"
+            for i in $(seq 1 12); do
+              sleep 10
+              USER_STATUS=$(docker inspect --format='{{.State.Health.Status}}' goa-user 2>/dev/null || echo "error")
+              echo "User intento $i: $USER_STATUS"
+              [ "$USER_STATUS" = "healthy" ] && break
+            done
+              if [ "$USER_STATUS" != "healthy" ]; then
+              echo "⚠️ User no healthy, continuando..."
+            fi
             docker start goa-gateway
            
             echo "✅ Deploy exitoso"
