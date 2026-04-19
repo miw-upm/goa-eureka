@@ -52,8 +52,9 @@ jobs:
           key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_STAGING }}
           script: |
             echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker rm -f ${{ env.ARTIFACT }} || true
+            
             docker pull ghcr.io/${{ env.REPOSITORY }}:latest
+            docker rm -f ${{ env.ARTIFACT }} || true
             docker run -d \
               --name ${{ env.ARTIFACT }} \
               --restart always \
@@ -64,12 +65,24 @@ jobs:
               -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
               -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
               ghcr.io/${{ env.REPOSITORY }}:latest
-            docker stop goa-gateway
-            docker stop goa-engagement
-            docker stop goa-user
-            docker stop goa-support
-            sleep 40
-            docker stop goa-support
-            docker start goa-user
-            docker start goa-engagement            
-            docker start goa-gateway
+
+            for i in $(seq 1 12); do
+              sleep 10
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' ${{ env.ARTIFACT }} 2>/dev/null || echo "error")
+              echo "Intento $i: $STATUS"
+              [ "$STATUS" = "healthy" ] && break
+            done
+            
+            if [ "$STATUS" != "healthy" ]; then
+              echo "❌ Deploy fallido"
+              docker logs --tail 50 ${{ env.ARTIFACT }}
+              exit 1
+            fi
+            
+            echo "⏳ Esperando registro en Eureka..."
+            sleep 60
+            
+            docker restart goa-gateway
+            echo "✅ Deploy exitoso"
+            
+            docker image prune --filter "until=12h" -f
