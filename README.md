@@ -33,3 +33,4 @@ docker compose up --build -d
 
 * Cliente Web: http://localhost:8761
 * Datos de instancias: http://localhost:8761/eureka/apps
+
