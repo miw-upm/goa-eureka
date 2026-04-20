@@ -1,16 +1,13 @@
 services:
   goa-eureka:
-    container_name: goa-eureka
     build: .
     image: goa-eureka:latest
     restart: always
-    ports:
-      - "8761:8761"
+    ports: ["8761:8761"]
     environment:
       JAVA_OPTS: "-Xms64m -Xmx384m"
     mem_limit: 512m
-    networks:
-      - goa
+    networks: [goa]
 
 networks:
   goa:
